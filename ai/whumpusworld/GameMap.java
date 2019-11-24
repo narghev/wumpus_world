@@ -4,10 +4,10 @@ import java.util.Vector;
 
 public class GameMap {
   //TODO replace me with a constructor to parse json file
-  private final Coordinate agentCoordinates = new Coordinate(0, 0);
-  private final Coordinate goldCoordinates = new Coordinate(1, 2);
-  private final Coordinate whumpusCoordinates = new Coordinate(0, 2);
-  private final Coordinate[] pitsCoordinates = {
+  public Coordinate agentCoordinates = new Coordinate(0, 0);
+  public final Coordinate goldCoordinates = new Coordinate(1, 2);
+  public final Coordinate whumpusCoordinates = new Coordinate(0, 2);
+  public final Coordinate[] pitsCoordinates = {
     new Coordinate(2, 0),
     new Coordinate(2, 2),
     new Coordinate(3, 3)

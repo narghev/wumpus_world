@@ -29,4 +29,8 @@ public class Coordinate {
 
     return adjacentCoordinates;
   }
+
+  public boolean equals(Coordinate coordinateToCompare) {
+    return this.x == coordinateToCompare.x && this.y == coordinateToCompare.y;
+  }
 }
