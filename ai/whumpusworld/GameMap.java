@@ -38,4 +38,41 @@ public class GameMap {
       });
     }
   }
+  public void printMap(){
+//      String [][] map = new String[4][4];
+//      map[agentCoordinates.x][agentCoordinates.y] = "A";
+//      map[goldCoordinates.x][goldCoordinates.y] = "G";
+//      map[whumpusCoordinates.x][whumpusCoordinates.y] = "W";
+//      map[pitsCoordinates[0].x][pitsCoordinates[0].y] = "P";
+//      map[pitsCoordinates[1].x][pitsCoordinates[1].y] = "P";
+//      map[pitsCoordinates[2].x][pitsCoordinates[2].y] = "P";
+//
+
+
+      for(int j =3; j>=0; j--){
+          for(int i = 0; i<4; i++){
+              System.out.print(" __");
+              if(agentCoordinates.x ==i && agentCoordinates.y ==j){
+                  System.out.print('A');
+              }
+              if(goldCoordinates.x ==i && goldCoordinates.y ==j){
+                  System.out.print('G');
+              }
+              if(whumpusCoordinates.x ==i && whumpusCoordinates.y==j){
+                  System.out.print('W');
+              }
+              if(pitsCoordinates[0].x == i && pitsCoordinates[0].y ==j){
+                  System.out.print('P');
+              }
+              if(pitsCoordinates[1].x == i && pitsCoordinates[1].y ==j){
+                  System.out.print('P');
+              }
+              if(pitsCoordinates[2].x == i && pitsCoordinates[2].y ==j){
+                  System.out.print('P');
+              }
+              System.out.print("__ ");
+          }
+          System.out.println();
+      }
+  }
 }
