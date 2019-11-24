@@ -8,7 +8,7 @@ import ai.whumpusworld.GameMap;
 import java.util.Queue;
 
 public class Agent {
-    public Queue<Coordinate> steps;
+    public Vector<Coordinate> steps = new Vector(1,1);
     public Coordinate currentLocation;
 
     private GameMap agentMap = new GameMap();
@@ -17,7 +17,7 @@ public class Agent {
 
     public Agent(){
         visited[0][0] = true;
-        steps.add(new Coordinate(0, 0));
+        steps.addElement(new Coordinate(0, 0));
         currentLocation = new Coordinate(0, 0);
     }
 
