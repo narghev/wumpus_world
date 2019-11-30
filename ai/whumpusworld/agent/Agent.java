@@ -13,7 +13,7 @@ public class Agent {
     private Coordinate currentLocation;
     private int currentLookingDirection; // 0 - left, 1 - up, 2 - right, 3 - down
 
-    private AgentMap agentMap;
+    public AgentMap agentMap;
     private boolean[][] visited;
     private Percept currentPercepts;
 
@@ -49,7 +49,9 @@ public class Agent {
         currentLocation = new Coordinate(currentLocation.x - 1, currentLocation.y);
     }
 
-    private void move(int direction) {
+    public Coordinate move() {
+        int direction = this.decideMove();
+        agentMap.map[currentLocation.x][currentLocation.y].agent = false;
         switch (direction) {
             case 0:
                 moveLeft();
@@ -66,6 +68,9 @@ public class Agent {
         }
         steps.addElement(currentLocation);
         visited[currentLocation.x][currentLocation.y] = true;
+        agentMap.map[currentLocation.x][currentLocation.y].agent = true;
+
+        return currentLocation;
     }
 
     private boolean isSafe(Coordinate coordinate) {
@@ -74,6 +79,24 @@ public class Agent {
 
     private boolean isVisited(Coordinate coordinate) {
         return visited[coordinate.x][coordinate.y];
+    }
+
+    private int getMoveDirection(Coordinate to) {
+        Coordinate current = this.currentLocation;
+        int currentX = current.x;
+        int currentY = current.y;
+        int toX = to.x;
+        int toY = to.y;
+        int deltaX = currentX - toX;
+        int deltaY = currentY - toY;
+
+        if (deltaX == 1)
+            return 0; // left
+        if (deltaX == -1)
+            return 2; // right
+        if (deltaY == 1)
+            return 3; // up
+        return 1; // down
     }
 
     private int decideMove() {
@@ -86,10 +109,8 @@ public class Agent {
 
         int randomCanGoCoordinateIndex = generator.nextInt(canGo.size());
         Coordinate shouldGo = canGo.elementAt(randomCanGoCoordinateIndex);
-
-        System.out.println(shouldGo.x);
-        System.out.println(shouldGo.y);
-        return 1;
+        int direction = getMoveDirection(shouldGo);
+        return direction;
     }
 
     private void updateKnowledgeBase() {
@@ -99,14 +120,18 @@ public class Agent {
             agentMap.map[currentLocation.x][currentLocation.y].gold = true;
 
         adjacentCoordinates.forEach(coordinate -> {
-            agentMap.map[coordinate.x][coordinate.y].pit = currentPercepts.breeze;
-            agentMap.map[coordinate.x][coordinate.y].whumpus = currentPercepts.stench;
+            if (!visited[coordinate.x][coordinate.y]){
+                agentMap.map[coordinate.x][coordinate.y].pit = currentPercepts.breeze;
+                agentMap.map[coordinate.x][coordinate.y].whumpus = currentPercepts.stench;
+            }
         });
     }
 
-    public void doStep(Percept newPercepts) {
+
+
+    public void setCurrentPercepts(Percept newPercepts) {
         this.currentPercepts = newPercepts;
-        agentMap.printMap();
         this.updateKnowledgeBase();
+        agentMap.printMap();
     }
 }

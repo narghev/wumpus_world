@@ -21,16 +21,14 @@ public class EmptyMap {
         for(int j = 3; j >= 0; j--){
             for(int i = 0; i < 4; i++){
                 System.out.print(" __");
-                if(agentCoordinates != null && agentCoordinates.x == i && agentCoordinates.y == j)
+                if(map[i][j].agent)
                     System.out.print('A');
-                if(goldCoordinates != null && goldCoordinates.x == i && goldCoordinates.y == j)
+                if(map[i][j].gold)
                     System.out.print('G');
-                if(whumpusCoordinates != null && whumpusCoordinates.x ==i && whumpusCoordinates.y==j)
+                if(map[i][j].whumpus)
                     System.out.print('W');
-                if (pitsCoordinates != null)
-                    for (Coordinate pitCoordinates: pitsCoordinates)
-                        if(pitCoordinates.x == i && pitCoordinates.y ==j)
-                            System.out.print('P');
+                if(map[i][j].pit)
+                    System.out.print('P');
 
                 System.out.print("__ ");
             }

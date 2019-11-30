@@ -15,16 +15,17 @@ public class Main {
     private static void game() {
 //        while (!gameOver()) {
             step();
+            step();
             return;
 //        }
     }
 
     private static void step() {
-        Coordinate agentCoordinate = gameMap.agentCoordinates;
-        Cell currentCell = gameMap.map[agentCoordinate.x][agentCoordinate.y];
+        Cell currentCell = gameMap.map[gameMap.agentCoordinates.x][gameMap.agentCoordinates.y];
         Percept currentPercepts = new Percept(currentCell.gold, currentCell.stench, currentCell.breeze);
-
-        agent.doStep(currentPercepts);
+        agent.setCurrentPercepts(currentPercepts);
+        Coordinate newAgentCoordinates = agent.move();
+        gameMap.agentCoordinates = newAgentCoordinates;
     }
 
     public static void main(String[] args) {
