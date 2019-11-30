@@ -1,27 +1,24 @@
 package ai.whumpusworld.agent;
 
 import java.util.Vector;
+import java.util.Random;
 
+import ai.whumpusworld.Map.AgentMap;
 import ai.whumpusworld.Coordinate;
-import ai.whumpusworld.GameMap;
-
-import java.util.Queue;
 
 public class Agent {
+    Random generator = new Random();
+
     private Vector<Coordinate> steps;
     private Coordinate currentLocation;
-    private int currentLookingDirection;
-//    0 - left
-//    1 - up
-//    2 - right
-//    3 - down
+    private int currentLookingDirection; // 0 - left, 1 - up, 2 - right, 3 - down
 
-    private GameMap agentMap;
+    private AgentMap agentMap;
     private boolean[][] visited;
     private Percept currentPercepts;
 
     public Agent(){
-        agentMap = new GameMap();
+        agentMap = new AgentMap();
         visited = new boolean[4][4];
         currentLocation = new Coordinate(0, 0);
         steps = new Vector<>(1,1);
@@ -68,6 +65,31 @@ public class Agent {
                 break;
         }
         steps.addElement(currentLocation);
+        visited[currentLocation.x][currentLocation.y] = true;
+    }
+
+    private boolean isSafe(Coordinate coordinate) {
+        return !(agentMap.map[coordinate.x][coordinate.y].pit || agentMap.map[coordinate.x][coordinate.y].whumpus);
+    }
+
+    private boolean isVisited(Coordinate coordinate) {
+        return visited[coordinate.x][coordinate.y];
+    }
+
+    private int decideMove() {
+        Vector<Coordinate> canGo = new Vector<>(1, 1);
+        Vector<Coordinate> adjacentCoordinates = currentLocation.adjacentCoordinates();
+        adjacentCoordinates.forEach(adjacentCoordinate -> {
+            if(isSafe(adjacentCoordinate) && !isVisited(adjacentCoordinate))
+                canGo.addElement(adjacentCoordinate);
+        });
+
+        int randomCanGoCoordinateIndex = generator.nextInt(canGo.size());
+        Coordinate shouldGo = canGo.elementAt(randomCanGoCoordinateIndex);
+
+        System.out.println(shouldGo.x);
+        System.out.println(shouldGo.y);
+        return 1;
     }
 
     private void updateKnowledgeBase() {
@@ -77,20 +99,14 @@ public class Agent {
             agentMap.map[currentLocation.x][currentLocation.y].gold = true;
 
         adjacentCoordinates.forEach(coordinate -> {
-            if (currentPercepts.breeze)
-                agentMap.map[coordinate.x][coordinate.y].pit = true;
-            else
-                agentMap.map[coordinate.x][coordinate.y].pit = false;
-
-            if (currentPercepts.stench)
-                agentMap.map[coordinate.x][coordinate.y].whumpus = true;
-            else
-                agentMap.map[coordinate.x][coordinate.y].whumpus = false;
+            agentMap.map[coordinate.x][coordinate.y].pit = currentPercepts.breeze;
+            agentMap.map[coordinate.x][coordinate.y].whumpus = currentPercepts.stench;
         });
     }
 
     public void doStep(Percept newPercepts) {
         this.currentPercepts = newPercepts;
+        agentMap.printMap();
         this.updateKnowledgeBase();
     }
 }

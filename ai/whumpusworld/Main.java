@@ -1,5 +1,6 @@
 package ai.whumpusworld;
 
+import ai.whumpusworld.Map.GameMap;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
@@ -12,10 +13,10 @@ public class Main {
     }
 
     private static void game() {
-        while (!gameOver()) {
+//        while (!gameOver()) {
             step();
             return;
-        }
+//        }
     }
 
     private static void step() {

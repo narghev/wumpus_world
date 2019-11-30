@@ -16,15 +16,11 @@ public class Coordinate {
     int x = this.x;
     int y = this.y;
 
-    for (int i = -1; i <= 1; i++)
-    {
-      for (int j = -1; j <= 1; j++)
-      {
-        if ((x + i <= 3 && x + i >= 0) && (y + j <= 3 && y + j >= 0) && ( !(i == 0 && j == 0) ))
-        {
-          adjacentCoordinates.addElement(new Coordinate(x+i, y+j));
-        }
-      }
+    for (int i = -1; i<= 1; i+=2) {
+      if (x + i <= 3 && x + i >= 0)
+        adjacentCoordinates.addElement(new Coordinate(x + i, y));
+      if (y+ i <= 3 && y + i >= 0)
+        adjacentCoordinates.addElement(new Coordinate(x, y + i));
     }
 
     return adjacentCoordinates;
