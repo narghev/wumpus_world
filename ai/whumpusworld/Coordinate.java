@@ -12,7 +12,7 @@ public class Coordinate {
   }
 
   public Vector adjacentCoordinates () {
-    Vector<Coordinate> adjacentCoordinates = new Vector(2, 1);
+    Vector<Coordinate> adjacentCoordinates = new Vector<>(2, 1);
     int x = this.x;
     int y = this.y;
 
