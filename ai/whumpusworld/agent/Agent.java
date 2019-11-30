@@ -107,6 +107,12 @@ public class Agent {
                 canGo.addElement(adjacentCoordinate);
         });
 
+        if (canGo.isEmpty()){
+            Coordinate previousLocation = steps.elementAt(steps.size() - 2);
+            int direction = getMoveDirection(previousLocation);
+            return direction;
+        }
+
         int randomCanGoCoordinateIndex = generator.nextInt(canGo.size());
         Coordinate shouldGo = canGo.elementAt(randomCanGoCoordinateIndex);
         int direction = getMoveDirection(shouldGo);

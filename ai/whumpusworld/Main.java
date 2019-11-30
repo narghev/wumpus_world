@@ -32,5 +32,6 @@ public class Main {
         gameMap = new GameMap();
         agent = new Agent();
         game();
+        agent.agentMap.printMap();
     }
 }
