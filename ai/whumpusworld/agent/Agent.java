@@ -13,11 +13,11 @@ public class Agent {
 
     private Stack<Coordinate> steps;
     private Coordinate currentLocation;
-    private int currentLookingDirection; // 0 - left, 1 - up, 2 - right, 3 - down
 
     public AgentMap agentMap;
     private boolean[][] visited;
     private Percept currentPercepts;
+    private boolean grabbed;
 
     public Agent(Percept initialPercepts){
         agentMap = new AgentMap();
@@ -25,7 +25,7 @@ public class Agent {
         currentLocation = new Coordinate(0, 0);
         steps = new Stack<>();
         currentPercepts = new Percept(false, false, false);
-        currentLookingDirection = 2;
+        grabbed = false;
 
         visited[0][0] = true;
         steps.push(new Coordinate(0, 0));
@@ -33,44 +33,55 @@ public class Agent {
     }
 
     private void moveUp() {
-        currentLookingDirection = 1;
         currentLocation = new Coordinate(currentLocation.x, currentLocation.y + 1);
     }
 
     private void moveDown() {
-        currentLookingDirection = 3;
         currentLocation = new Coordinate(currentLocation.x, currentLocation.y - 1);
     }
 
     private void moveRight() {
-        currentLookingDirection = 2;
         currentLocation = new Coordinate(currentLocation.x + 1, currentLocation.y);
     }
 
     private void moveLeft() {
-        currentLookingDirection = 0;
         currentLocation = new Coordinate(currentLocation.x - 1, currentLocation.y);
     }
 
+    private void moveBackWithGold() {
+        steps.pop();
+        agentMap.map[currentLocation.x][currentLocation.y].gold.data = false;
+        currentLocation = steps.peek();
+        agentMap.map[currentLocation.x][currentLocation.y].gold.data = true;
+    }
+
     public Coordinate move() {
-        int direction = this.decideMove();
         agentMap.map[currentLocation.x][currentLocation.y].agent.data = false;
-        switch (direction) {
-            case 0:
-                moveLeft();
-                break;
-            case 1:
-                moveUp();
-                break;
-            case 2:
-                moveRight();
-                break;
-            case 3:
-                moveDown();
-                break;
+
+        if (grabbed) {
+            moveBackWithGold();
         }
-        steps.push(currentLocation);
-        visited[currentLocation.x][currentLocation.y] = true;
+        else {
+            int direction = this.decideMove();
+            switch (direction) {
+                case 0:
+                    moveLeft();
+                    break;
+                case 1:
+                    moveUp();
+                    break;
+                case 2:
+                    moveRight();
+                    break;
+                case 3:
+                    moveDown();
+                    break;
+            }
+
+            steps.push(currentLocation);
+            visited[currentLocation.x][currentLocation.y] = true;
+        }
+
         agentMap.map[currentLocation.x][currentLocation.y].agent.data = true;
 
         return currentLocation;
@@ -144,10 +155,17 @@ public class Agent {
         });
     }
 
-
-
     public void setCurrentPercepts(Percept newPercepts) {
         this.currentPercepts = newPercepts;
         this.updateKnowledgeBase();
+    }
+
+    public Coordinate grab() {
+        AgentCell currentCell = agentMap.map[currentLocation.x][currentLocation.y];
+        if (!grabbed && currentCell.agent.data && currentCell.gold.data)
+            grabbed = true;
+        if (grabbed)
+            return currentLocation;
+        return null;
     }
 }

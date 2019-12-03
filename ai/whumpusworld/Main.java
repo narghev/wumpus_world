@@ -14,13 +14,10 @@ public class Main {
     }
 
     private static void game() {
-        for (int i = 0; i <= 6; i++)
-        {
-//        while (!gameOver()) {
+        while (!gameOver()) {
             step();
             agent.agentMap.printMap();
             System.out.println("------------------------------------------------");
-//        }
         }
     }
 
@@ -31,6 +28,11 @@ public class Main {
     }
 
     private static void step() {
+        // GRAB GOLD
+        Coordinate newGoldCoordinate = agent.grab();
+        if (newGoldCoordinate != null)
+            gameMap.goldCoordinates = newGoldCoordinate;
+
         // MOVE AGENT
         Coordinate newAgentCoordinates = agent.move();
         gameMap.agentCoordinates = newAgentCoordinates;
