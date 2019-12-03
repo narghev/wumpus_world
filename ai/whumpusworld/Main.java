@@ -1,5 +1,6 @@
 package ai.whumpusworld;
 
+import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Map.GameMap;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
@@ -13,11 +14,13 @@ public class Main {
     }
 
     private static void game() {
+        for (int i = 0; i <= 1; i++)
+        {
 //        while (!gameOver()) {
             step();
-            step();
-            return;
+            System.out.println("---------------------------------------------------");
 //        }
+        }
     }
 
     private static void step() {

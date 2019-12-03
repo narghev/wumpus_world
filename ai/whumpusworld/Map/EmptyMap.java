@@ -1,6 +1,6 @@
 package ai.whumpusworld.Map;
 
-import ai.whumpusworld.Cell;
+import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Coordinate;
 
 public class EmptyMap {

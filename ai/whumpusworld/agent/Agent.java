@@ -74,6 +74,8 @@ public class Agent {
     }
 
     private boolean isSafe(Coordinate coordinate) {
+        if (!agentMap.map[coordinate.x][coordinate.y].set)
+            return false;
         return !(agentMap.map[coordinate.x][coordinate.y].pit || agentMap.map[coordinate.x][coordinate.y].whumpus);
     }
 
@@ -126,7 +128,7 @@ public class Agent {
             agentMap.map[currentLocation.x][currentLocation.y].gold = true;
 
         adjacentCoordinates.forEach(coordinate -> {
-            if (!visited[coordinate.x][coordinate.y]){
+            if (!visited[coordinate.x][coordinate.y] && !agentMap.map[coordinate.x][coordinate.y].set){
                 agentMap.map[coordinate.x][coordinate.y].pit = currentPercepts.breeze;
                 agentMap.map[coordinate.x][coordinate.y].whumpus = currentPercepts.stench;
             }
