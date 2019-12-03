@@ -17,7 +17,7 @@ public class Agent {
     private boolean[][] visited;
     private Percept currentPercepts;
 
-    public Agent(){
+    public Agent(Percept initialPercepts){
         agentMap = new AgentMap();
         visited = new boolean[4][4];
         currentLocation = new Coordinate(0, 0);
@@ -27,6 +27,7 @@ public class Agent {
 
         visited[0][0] = true;
         steps.addElement(new Coordinate(0, 0));
+        this.setCurrentPercepts(initialPercepts);
     }
 
     private void moveUp() {
@@ -74,8 +75,6 @@ public class Agent {
     }
 
     private boolean isSafe(Coordinate coordinate) {
-        if (!agentMap.map[coordinate.x][coordinate.y].set)
-            return false;
         return !(agentMap.map[coordinate.x][coordinate.y].pit || agentMap.map[coordinate.x][coordinate.y].whumpus);
     }
 
@@ -128,7 +127,7 @@ public class Agent {
             agentMap.map[currentLocation.x][currentLocation.y].gold = true;
 
         adjacentCoordinates.forEach(coordinate -> {
-            if (!visited[coordinate.x][coordinate.y] && !agentMap.map[coordinate.x][coordinate.y].set){
+            if (!visited[coordinate.x][coordinate.y]){
                 agentMap.map[coordinate.x][coordinate.y].pit = currentPercepts.breeze;
                 agentMap.map[coordinate.x][coordinate.y].whumpus = currentPercepts.stench;
             }
@@ -140,6 +139,5 @@ public class Agent {
     public void setCurrentPercepts(Percept newPercepts) {
         this.currentPercepts = newPercepts;
         this.updateKnowledgeBase();
-        agentMap.printMap();
     }
 }

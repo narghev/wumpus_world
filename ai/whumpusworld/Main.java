@@ -14,27 +14,41 @@ public class Main {
     }
 
     private static void game() {
-        for (int i = 0; i <= 1; i++)
+        for (int i = 0; i <= 3; i++)
         {
 //        while (!gameOver()) {
+            System.out.println("START");
+            agent.agentMap.printMap();
             step();
-            System.out.println("---------------------------------------------------");
+            System.out.println("END");
+            agent.agentMap.printMap();
+            System.out.println("------------------------------------------------");
 //        }
         }
     }
 
-    private static void step() {
-        Cell currentCell = gameMap.map[gameMap.agentCoordinates.x][gameMap.agentCoordinates.y];
+    private static Percept getCurrentPercepts(Coordinate agentCoordinates){
+        Cell currentCell = gameMap.map[agentCoordinates.x][agentCoordinates.y];
         Percept currentPercepts = new Percept(currentCell.gold, currentCell.stench, currentCell.breeze);
-        agent.setCurrentPercepts(currentPercepts);
+        return currentPercepts;
+    }
+
+    private static void step() {
+        // MOVE AGENT
         Coordinate newAgentCoordinates = agent.move();
         gameMap.agentCoordinates = newAgentCoordinates;
+
+        // UPDATE KB
+        Percept newPercepts = getCurrentPercepts(newAgentCoordinates);
+        agent.setCurrentPercepts(newPercepts);
     }
 
     public static void main(String[] args) {
         gameMap = new GameMap();
-        agent = new Agent();
+
+        Cell initCell = gameMap.map[0][0];
+        agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));
+
         game();
-        agent.agentMap.printMap();
     }
 }
