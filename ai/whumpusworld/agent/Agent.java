@@ -1,5 +1,6 @@
 package ai.whumpusworld.agent;
 
+import java.util.Stack;
 import java.util.Vector;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ import ai.whumpusworld.Cell.AgentCell;
 public class Agent {
     Random generator = new Random();
 
-    private Vector<Coordinate> steps;
+    private Stack<Coordinate> steps;
     private Coordinate currentLocation;
     private int currentLookingDirection; // 0 - left, 1 - up, 2 - right, 3 - down
 
@@ -22,12 +23,12 @@ public class Agent {
         agentMap = new AgentMap();
         visited = new boolean[4][4];
         currentLocation = new Coordinate(0, 0);
-        steps = new Vector<>(1,1);
+        steps = new Stack<>();
         currentPercepts = new Percept(false, false, false);
         currentLookingDirection = 2;
 
         visited[0][0] = true;
-        steps.addElement(new Coordinate(0, 0));
+        steps.push(new Coordinate(0, 0));
         this.setCurrentPercepts(initialPercepts);
     }
 
@@ -68,7 +69,7 @@ public class Agent {
                 moveDown();
                 break;
         }
-        steps.addElement(currentLocation);
+        steps.push(currentLocation);
         visited[currentLocation.x][currentLocation.y] = true;
         agentMap.map[currentLocation.x][currentLocation.y].agent.data = true;
 
@@ -110,7 +111,8 @@ public class Agent {
         });
 
         if (canGo.isEmpty()){
-            Coordinate previousLocation = steps.elementAt(steps.size() - 2);
+            steps.pop();
+            Coordinate previousLocation = steps.peek();
             int direction = getMoveDirection(previousLocation);
             return direction;
         }

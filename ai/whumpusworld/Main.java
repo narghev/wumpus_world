@@ -14,13 +14,10 @@ public class Main {
     }
 
     private static void game() {
-        for (int i = 0; i <= 3; i++)
+        for (int i = 0; i <= 6; i++)
         {
 //        while (!gameOver()) {
-            System.out.println("START");
-            agent.agentMap.printMap();
             step();
-            System.out.println("END");
             agent.agentMap.printMap();
             System.out.println("------------------------------------------------");
 //        }
