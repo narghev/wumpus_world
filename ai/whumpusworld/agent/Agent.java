@@ -5,6 +5,7 @@ import java.util.Random;
 
 import ai.whumpusworld.Map.AgentMap;
 import ai.whumpusworld.Coordinate;
+import ai.whumpusworld.Cell.AgentCell;
 
 public class Agent {
     Random generator = new Random();
@@ -52,7 +53,7 @@ public class Agent {
 
     public Coordinate move() {
         int direction = this.decideMove();
-        agentMap.map[currentLocation.x][currentLocation.y].agent = false;
+        agentMap.map[currentLocation.x][currentLocation.y].agent.data = false;
         switch (direction) {
             case 0:
                 moveLeft();
@@ -69,13 +70,13 @@ public class Agent {
         }
         steps.addElement(currentLocation);
         visited[currentLocation.x][currentLocation.y] = true;
-        agentMap.map[currentLocation.x][currentLocation.y].agent = true;
+        agentMap.map[currentLocation.x][currentLocation.y].agent.data = true;
 
         return currentLocation;
     }
 
     private boolean isSafe(Coordinate coordinate) {
-        return !(agentMap.map[coordinate.x][coordinate.y].pit || agentMap.map[coordinate.x][coordinate.y].whumpus);
+        return !(agentMap.map[coordinate.x][coordinate.y].pit.data || agentMap.map[coordinate.x][coordinate.y].whumpus.data);
     }
 
     private boolean isVisited(Coordinate coordinate) {
@@ -124,12 +125,19 @@ public class Agent {
         Vector<Coordinate> adjacentCoordinates = currentLocation.adjacentCoordinates();
 
         if (currentPercepts.glitter)
-            agentMap.map[currentLocation.x][currentLocation.y].gold = true;
+            agentMap.map[currentLocation.x][currentLocation.y].gold.data = true;
 
         adjacentCoordinates.forEach(coordinate -> {
             if (!visited[coordinate.x][coordinate.y]){
-                agentMap.map[coordinate.x][coordinate.y].pit = currentPercepts.breeze;
-                agentMap.map[coordinate.x][coordinate.y].whumpus = currentPercepts.stench;
+                AgentCell cell = agentMap.map[coordinate.x][coordinate.y];
+                if (!cell.pit.alreadySet || !currentPercepts.breeze) {
+                    agentMap.map[coordinate.x][coordinate.y].pit.data = currentPercepts.breeze;
+                    cell.pit.alreadySet = true;
+                }
+                if (!cell.whumpus.alreadySet || !currentPercepts.stench) {
+                    agentMap.map[coordinate.x][coordinate.y].whumpus.data = currentPercepts.stench;
+                    cell.whumpus.alreadySet = true;
+                }
             }
         });
     }

@@ -9,7 +9,6 @@ public class EmptyMap {
     public Coordinate agentCoordinates;
     public Coordinate goldCoordinates;
     public Coordinate whumpusCoordinates;
-    public Coordinate[] pitsCoordinates;
 
     public EmptyMap() {
         for (int i = 0; i < 4; i++)
