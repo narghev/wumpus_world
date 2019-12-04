@@ -12,7 +12,8 @@ public class Main {
     private static Agent agent;
 
     private static boolean gameOver() {
-        return gameMap.agentCoordinates.equals(new Coordinate(0, 0)) && gameMap.goldCoordinates.equals(new Coordinate(0, 0));
+        return gameMap.agentCoordinates.equals(new Coordinate(0, 0))
+                && gameMap.goldCoordinates.equals(new Coordinate(0, 0));
     }
 
     private static void game() {
@@ -25,8 +26,7 @@ public class Main {
 
     private static Percept getCurrentPercepts(Coordinate agentCoordinates){
         Cell currentCell = gameMap.map[agentCoordinates.x][agentCoordinates.y];
-        Percept currentPercepts = new Percept(currentCell.gold, currentCell.stench, currentCell.breeze);
-        return currentPercepts;
+        return new Percept(currentCell.gold, currentCell.stench, currentCell.breeze);
     }
 
     private static void killWhumpus() {

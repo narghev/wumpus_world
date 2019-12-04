@@ -161,11 +161,15 @@ public class Agent {
     }
 
     public Coordinate grab() {
-        AgentCell currentCell = agentMap.map[currentLocation.x][currentLocation.y];
-        if (!grabbed && currentCell.agent.data && currentCell.gold.data)
-            grabbed = true;
         if (grabbed)
             return currentLocation;
+
+        AgentCell currentCell = agentMap.map[currentLocation.x][currentLocation.y];
+        if (currentCell.agent.data && currentCell.gold.data) {
+            grabbed = true;
+            return currentLocation;
+        }
+
         return null;
     }
 
