@@ -2,6 +2,7 @@ package ai.whumpusworld;
 
 import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Map.GameMap;
+import ai.whumpusworld.View.MapView;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
@@ -67,5 +68,6 @@ public class Main {
         agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));
 
         game();
+        new MapView();
     }
 }
