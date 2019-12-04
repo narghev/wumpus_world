@@ -165,7 +165,7 @@ public class Agent {
             return currentLocation;
 
         AgentCell currentCell = agentMap.map[currentLocation.x][currentLocation.y];
-        if (currentCell.agent.data && currentCell.gold.data) {
+        if (currentCell.gold.data) {
             grabbed = true;
             return currentLocation;
         }

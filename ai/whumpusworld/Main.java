@@ -7,8 +7,10 @@ import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
+    private static MapView mapView;
     private static GameMap gameMap;
     private static Agent agent;
 
@@ -17,10 +19,12 @@ public class Main {
                 && gameMap.goldCoordinates.equals(new Coordinate(0, 0));
     }
 
-    private static void game() {
+    private static void game() throws InterruptedException {
         while (!gameOver()) {
+            TimeUnit.SECONDS.sleep(3);
             step();
-            agent.agentMap.printMap();
+            mapView.repaint(gameMap);
+            gameMap.printMap();
             System.out.println("------------------------------------------------");
         }
     }
@@ -31,9 +35,8 @@ public class Main {
     }
 
     private static void killWhumpus() {
-        Coordinate whumpusCoordinate = gameMap.whumpusCoordinates;
-        Cell whumpusCell = gameMap.map[whumpusCoordinate.x][whumpusCoordinate.y];
-        Vector<Coordinate> whumpusAdjacent = whumpusCoordinate.adjacentCoordinates();
+        Cell whumpusCell = gameMap.map[gameMap.whumpusCoordinates.x][gameMap.whumpusCoordinates.y];
+        Vector<Coordinate> whumpusAdjacent = gameMap.whumpusCoordinates.adjacentCoordinates();
         whumpusCell.whumpus = false;
         whumpusAdjacent.forEach(c -> {
             gameMap.map[c.x][c.y].stench = false;
@@ -42,11 +45,6 @@ public class Main {
     }
 
     private static void step() {
-        // GRAB GOLD
-        Coordinate newGoldCoordinate = agent.grab();
-        if (newGoldCoordinate != null)
-            gameMap.goldCoordinates = newGoldCoordinate;
-
         // SHOOT THE WHUMPUS
         boolean shootResult = agent.shoot();
         if (shootResult)
@@ -54,20 +52,26 @@ public class Main {
 
         // MOVE AGENT
         Coordinate newAgentCoordinates = agent.move();
-        gameMap.agentCoordinates = newAgentCoordinates;
+        gameMap.setAgentCoordinates(newAgentCoordinates);
+
+        // GRAB GOLD
+        Coordinate newGoldCoordinate = agent.grab();
+        if (newGoldCoordinate != null) {
+            gameMap.setGoldCoordinates(newGoldCoordinate);
+        }
 
         // UPDATE KB
         Percept newPercepts = getCurrentPercepts(newAgentCoordinates);
         agent.setCurrentPercepts(newPercepts);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         gameMap = new GameMap();
 
         Cell initCell = gameMap.map[0][0];
         agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));
 
+        mapView = new MapView();
         game();
-        new MapView();
     }
 }

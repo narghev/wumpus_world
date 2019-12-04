@@ -3,7 +3,7 @@ package ai.whumpusworld.View.Image;
 import javax.swing.*;
 import java.awt.*;
 
-class BaseImage extends JPanel {
+public class BaseImage extends JPanel {
     private Image image;
 
     public BaseImage(String path) {
