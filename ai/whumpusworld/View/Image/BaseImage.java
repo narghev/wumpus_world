@@ -8,8 +8,8 @@ class BaseImage extends JPanel {
 
     public BaseImage(String path) {
         super();
-        this.image = new ImageIcon(this.getClass().getResource("./agent.png")).getImage();
-        this.setPreferredSize(new Dimension(100, 100));
+        this.image = new ImageIcon(this.getClass().getResource(path)).getImage();
+        this.setPreferredSize(new Dimension(70, 70));
     }
 
     @Override
