@@ -9,7 +9,7 @@ import ai.whumpusworld.Coordinate;
 import ai.whumpusworld.Cell.AgentCell;
 
 public class Agent {
-    Random generator = new Random();
+    private Random generator = new Random();
 
     private Stack<Coordinate> steps;
     private Coordinate currentLocation;
@@ -167,5 +167,22 @@ public class Agent {
         if (grabbed)
             return currentLocation;
         return null;
+    }
+
+    public boolean shoot() {
+        Vector<Coordinate> adjacentCoordinates = currentLocation.adjacentCoordinates();
+        Vector<Coordinate> whumpusCoordinates = new Vector<>(0, 1);
+        for (Coordinate c : adjacentCoordinates)
+            if (agentMap.map[c.x][c.y].whumpus.data)
+                whumpusCoordinates.addElement(c);
+
+        if (whumpusCoordinates.size() == 1) {
+            Coordinate whumpusCoordinate = whumpusCoordinates.elementAt(0);
+            agentMap.map[whumpusCoordinate.x][whumpusCoordinate.y].whumpus.data = false;
+            agentMap.map[whumpusCoordinate.x][whumpusCoordinate.y].whumpus.alreadySet = true;
+            return true;
+        }
+
+        return false;
     }
 }
