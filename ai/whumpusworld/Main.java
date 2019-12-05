@@ -8,6 +8,8 @@ import ai.whumpusworld.View.Game.GameMapView;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
@@ -18,19 +20,19 @@ public class Main {
     private static GameMap gameMap;
     private static Agent agent;
 
-    private static boolean gameOver() {
-        return gameMap.agentCoordinates.equals(new Coordinate(0, 0))
-                && gameMap.goldCoordinates.equals(new Coordinate(0, 0));
-    }
+//    private static boolean gameOver() {
+//        return gameMap.agentCoordinates.equals(new Coordinate(0, 0))
+//                && gameMap.goldCoordinates.equals(new Coordinate(0, 0));
+//    }
 
-    private static void game() throws InterruptedException {
-        while (!gameOver()) {
-            TimeUnit.SECONDS.sleep(1);
-            step();
-            mapView.repaint(agent.agentMap);
-            perceptView.repaint(agent.currentPercepts);
-        }
-    }
+//    private static void game() throws InterruptedException {
+//        while (!gameOver()) {
+//            TimeUnit.SECONDS.sleep(1);
+//            step();
+//            mapView.repaint(agent.agentMap);
+//            perceptView.repaint(agent.currentPercepts);
+//        }
+//    }
 
     private static Percept getCurrentPercepts(Coordinate agentCoordinates){
         Cell currentCell = gameMap.map[agentCoordinates.x][agentCoordinates.y];
@@ -77,6 +79,24 @@ public class Main {
         mapView = new MapView(agent.agentMap);
         perceptView = new PerceptView();
         gameMapView = new GameMapView(gameMap);
-        game();
+
+        mapView.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) { }
+
+            @Override
+            public void keyPressed(KeyEvent e) { }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    step();
+                    mapView.repaint(agent.agentMap);
+                    perceptView.repaint(agent.currentPercepts);
+                }
+            }
+        });
+
+//        game();
     }
 }
