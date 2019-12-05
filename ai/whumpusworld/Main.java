@@ -58,8 +58,10 @@ public class Main {
 
         // SHOOT THE WHUMPUS
         boolean shootResult = agent.shoot();
-        if (shootResult)
+        if (shootResult) {
             killWhumpus();
+            return;
+        }
 
         // MOVE AGENT
         Coordinate newAgentCoordinates = agent.move();
