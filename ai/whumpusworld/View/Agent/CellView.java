@@ -1,4 +1,4 @@
-package ai.whumpusworld.View;
+package ai.whumpusworld.View.Agent;
 
 import ai.whumpusworld.Cell.AgentCell;
 import ai.whumpusworld.Cell.Cell;

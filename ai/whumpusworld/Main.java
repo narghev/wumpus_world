@@ -2,8 +2,8 @@ package ai.whumpusworld;
 
 import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Map.GameMap;
-import ai.whumpusworld.View.MapView;
-import ai.whumpusworld.View.PerceptView;
+import ai.whumpusworld.View.Agent.MapView;
+import ai.whumpusworld.View.Agent.PerceptView;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
