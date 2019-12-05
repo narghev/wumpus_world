@@ -14,24 +14,32 @@ public class GameMap {
     public Coordinate whumpusCoordinates;
     private HashSet<Coordinate> usedCells = new HashSet<>();
 
-      public GameMap () {
+    public GameMap() {
 
-          for (int i = 0; i < 4; i++)
-              for (int j = 0; j < 4; j++)
-                  map[i][j] = new Cell(false, false, false, false, false, false);
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
+                map[i][j] = new Cell(false, false, false, false, false, false);
 
-          agentCoordinates = new Coordinate(0, 0);
-          this.usedCells.add(agentCoordinates);
+        Coordinate[] pitsCoordinates = new Coordinate[3];
+        agentCoordinates = new Coordinate(0, 0);
+        this.usedCells.add(agentCoordinates);
+        boolean random = false;
+        if (!random) {
+            goldCoordinates = new Coordinate(1, 2);
+            whumpusCoordinates = new Coordinate(0, 2);
+            pitsCoordinates[0] = new Coordinate(2, 0);
+            pitsCoordinates[1] = new Coordinate(2, 2);
+            pitsCoordinates[2] = new Coordinate(3, 3);
 
-          goldCoordinates = getNewCoordinate();
+        } else {
+            goldCoordinates = getNewCoordinate();
+            whumpusCoordinates = getNewCoordinate();
+            pitsCoordinates[0] = getNewCoordinate();
+            pitsCoordinates[1] = getNewCoordinate();
+            pitsCoordinates[2] = getNewCoordinate();
+        }
 
-          whumpusCoordinates = getNewCoordinate();
 
-          Coordinate[] pitsCoordinates = {
-              getNewCoordinate(),
-              getNewCoordinate(),
-              getNewCoordinate()
-          };
 
         map[agentCoordinates.x][agentCoordinates.y].agent = true;
         map[goldCoordinates.x][goldCoordinates.y].gold = true;
