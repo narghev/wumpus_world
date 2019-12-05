@@ -22,6 +22,7 @@ public class GameMap {
 
           agentCoordinates = new Coordinate(0, 0);
           this.usedCells.add(agentCoordinates);
+          
           goldCoordinates = getNewCoordinate();
 
           whumpusCoordinates = getNewCoordinate();
@@ -53,17 +54,16 @@ public class GameMap {
 
     private Coordinate  getNewCoordinate() {
           Coordinate coordinate = new Coordinate(getRandomNumberInRange(),getRandomNumberInRange());
-        for (Coordinate coordinate1:this.usedCells) {while (coordinate ==coordinate1){
+        for (Coordinate coordinate1 : this.usedCells)
+            while (coordinate ==coordinate1)
                  coordinate = new Coordinate(getRandomNumberInRange(),getRandomNumberInRange());
-        }
-        }
         this.usedCells.add(coordinate);
 
         return coordinate;
     }
+
     private static int getRandomNumberInRange(){
-          int result = (int)(Math.random() * 4);
-        System.out.println(result);
+        int result = (int)(Math.random() * 4);
         return result;
     }
 
