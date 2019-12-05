@@ -23,7 +23,7 @@ public class Main {
         while (!gameOver()) {
             TimeUnit.SECONDS.sleep(3);
             step();
-            mapView.repaint(gameMap);
+            mapView.repaint(agent.agentMap);
             gameMap.printMap();
             System.out.println("------------------------------------------------");
         }

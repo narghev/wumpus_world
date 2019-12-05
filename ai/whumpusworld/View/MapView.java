@@ -1,6 +1,6 @@
 package ai.whumpusworld.View;
 
-import ai.whumpusworld.Map.GameMap;
+import ai.whumpusworld.Map.AgentMap;
 
 import javax.swing.JFrame;
 import java.awt.*;
@@ -24,7 +24,7 @@ public class MapView extends JFrame {
         setVisible(true);
     }
 
-    public void repaint(GameMap map) {
+    public void repaint(AgentMap map) {
         for(int i = 0; i < 4; i++)
             for(int j = 0; j < 4; j++)
                 cells[i][j].update(map.map[i][j]);
