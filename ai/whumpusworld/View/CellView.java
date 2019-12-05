@@ -20,9 +20,9 @@ class CellView extends JPanel {
     CellView() {
         super();
         setLayout(new FlowLayout());
-        this.setBackground(Color.white);
+        this.setBackground(Color.black);
         this.setPreferredSize(new Dimension(100, 100));
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        this.setBorder(BorderFactory.createLineBorder(Color.red));
 
         this.pitImage.setVisible(false);
         this.goldImage.setVisible(false);
@@ -40,6 +40,8 @@ class CellView extends JPanel {
     }
 
     void update(AgentCell cell) {
+        if (cell.pit.alreadySet)
+            this.setBackground(Color.white);
         this.pitImage.setVisible(cell.pit.data);
         this.goldImage.setVisible(cell.gold.data);
         this.agentImage.setVisible(cell.agent.data);
