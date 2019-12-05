@@ -21,7 +21,7 @@ public class GameMap {
                   map[i][j] = new Cell(false, false, false, false, false, false);
 
           agentCoordinates = new Coordinate(0, 0);
-
+          this.usedCells.add(agentCoordinates);
           goldCoordinates = getNewCoordinate();
 
           whumpusCoordinates = getNewCoordinate();

@@ -2,33 +2,37 @@ package ai.whumpusworld;
 
 import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Map.GameMap;
-import ai.whumpusworld.View.MapView;
-import ai.whumpusworld.View.PerceptView;
+import ai.whumpusworld.View.Agent.MapView;
+import ai.whumpusworld.View.Agent.PerceptView;
+import ai.whumpusworld.View.Game.GameMapView;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+    private static GameMapView gameMapView;
     private static MapView mapView;
     private static PerceptView perceptView;
     private static GameMap gameMap;
     private static Agent agent;
 
-    private static boolean gameOver() {
-        return gameMap.agentCoordinates.equals(new Coordinate(0, 0))
-                && gameMap.goldCoordinates.equals(new Coordinate(0, 0));
-    }
+//    private static boolean gameOver() {
+//        return gameMap.agentCoordinates.equals(new Coordinate(0, 0))
+//                && gameMap.goldCoordinates.equals(new Coordinate(0, 0));
+//    }
 
-    private static void game() throws InterruptedException {
-        while (!gameOver()) {
-            TimeUnit.SECONDS.sleep(1);
-            step();
-            mapView.repaint(agent.agentMap);
-            perceptView.repaint(agent.currentPercepts);
-        }
-    }
+//    private static void game() throws InterruptedException {
+//        while (!gameOver()) {
+//            TimeUnit.SECONDS.sleep(1);
+//            step();
+//            mapView.repaint(agent.agentMap);
+//            perceptView.repaint(agent.currentPercepts);
+//        }
+//    }
 
     private static Percept getCurrentPercepts(Coordinate agentCoordinates){
         Cell currentCell = gameMap.map[agentCoordinates.x][agentCoordinates.y];
@@ -54,8 +58,10 @@ public class Main {
 
         // SHOOT THE WHUMPUS
         boolean shootResult = agent.shoot();
-        if (shootResult)
+        if (shootResult) {
             killWhumpus();
+            return;
+        }
 
         // MOVE AGENT
         Coordinate newAgentCoordinates = agent.move();
@@ -72,8 +78,27 @@ public class Main {
         Cell initCell = gameMap.map[0][0];
         agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));
 
-        mapView = new MapView();
+        mapView = new MapView(agent.agentMap);
         perceptView = new PerceptView();
-        game();
+        gameMapView = new GameMapView(gameMap);
+
+        mapView.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) { }
+
+            @Override
+            public void keyPressed(KeyEvent e) { }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    step();
+                    mapView.repaint(agent.agentMap);
+                    perceptView.repaint(agent.currentPercepts);
+                }
+            }
+        });
+
+//        game();
     }
 }

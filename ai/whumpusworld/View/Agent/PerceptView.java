@@ -1,4 +1,4 @@
-package ai.whumpusworld.View;
+package ai.whumpusworld.View.Agent;
 
 import ai.whumpusworld.View.Image.BaseImage;
 import ai.whumpusworld.View.Image.Images;
