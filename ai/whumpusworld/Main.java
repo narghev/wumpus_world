@@ -73,7 +73,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        gameMap = new GameMap();
+        gameMap = new GameMap(false);
 
         Cell initCell = gameMap.map[0][0];
         agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));

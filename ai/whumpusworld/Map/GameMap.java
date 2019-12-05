@@ -14,7 +14,7 @@ public class GameMap {
     public Coordinate whumpusCoordinates;
     private HashSet<Coordinate> usedCells = new HashSet<>();
 
-    public GameMap() {
+    public GameMap(boolean random) {
 
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++)
@@ -23,7 +23,6 @@ public class GameMap {
         Coordinate[] pitsCoordinates = new Coordinate[3];
         agentCoordinates = new Coordinate(0, 0);
         this.usedCells.add(agentCoordinates);
-        boolean random = false;
         if (!random) {
             goldCoordinates = new Coordinate(1, 2);
             whumpusCoordinates = new Coordinate(0, 2);
