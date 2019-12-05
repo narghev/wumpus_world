@@ -4,6 +4,7 @@ import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Map.GameMap;
 import ai.whumpusworld.View.Agent.MapView;
 import ai.whumpusworld.View.Agent.PerceptView;
+import ai.whumpusworld.View.Game.GameMapView;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
@@ -11,6 +12,7 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+    private static GameMapView gameMapView;
     private static MapView mapView;
     private static PerceptView perceptView;
     private static GameMap gameMap;
@@ -74,6 +76,7 @@ public class Main {
 
         mapView = new MapView();
         perceptView = new PerceptView();
+        gameMapView = new GameMapView(gameMap);
         game();
     }
 }
