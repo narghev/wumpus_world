@@ -3,6 +3,7 @@ package ai.whumpusworld.Map;
 import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Coordinate;
 
+import java.util.HashSet;
 import java.util.Vector;
 
 public class GameMap {
@@ -11,6 +12,7 @@ public class GameMap {
     public Coordinate agentCoordinates;
     public Coordinate goldCoordinates;
     public Coordinate whumpusCoordinates;
+    private HashSet<Coordinate> usedCells = new HashSet<>();
 
       public GameMap () {
 
@@ -19,12 +21,15 @@ public class GameMap {
                   map[i][j] = new Cell(false, false, false, false, false, false);
 
           agentCoordinates = new Coordinate(0, 0);
-          goldCoordinates = new Coordinate(1, 2);
-          whumpusCoordinates = new Coordinate(0, 2);
+
+          goldCoordinates = getNewCoordinate();
+
+          whumpusCoordinates = getNewCoordinate();
+
           Coordinate[] pitsCoordinates = {
-              new Coordinate(2, 0),
-              new Coordinate(2, 2),
-              new Coordinate(3, 3)
+              getNewCoordinate(),
+              getNewCoordinate(),
+              getNewCoordinate()
           };
 
         map[agentCoordinates.x][agentCoordinates.y].agent = true;
@@ -45,6 +50,22 @@ public class GameMap {
           });
         }
       }
+
+    private Coordinate  getNewCoordinate() {
+          Coordinate coordinate = new Coordinate(getRandomNumberInRange(),getRandomNumberInRange());
+        for (Coordinate coordinate1:this.usedCells) {while (coordinate ==coordinate1){
+                 coordinate = new Coordinate(getRandomNumberInRange(),getRandomNumberInRange());
+        }
+        }
+        this.usedCells.add(coordinate);
+
+        return coordinate;
+    }
+    private static int getRandomNumberInRange(){
+          int result = (int)(Math.random() * 4);
+        System.out.println(result);
+        return result;
+    }
 
     public void printMap(){
         for(int j = 3; j >= 0; j--){
