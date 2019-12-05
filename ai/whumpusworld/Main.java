@@ -79,7 +79,7 @@ public class Main {
         agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));
 
         mapView = new MapView(agent.agentMap);
-        perceptView = new PerceptView();
+        perceptView = new PerceptView(agent.currentPercepts);
         gameMapView = new GameMapView(gameMap);
 
         mapView.addKeyListener(new KeyListener() {

@@ -12,7 +12,7 @@ public class PerceptView extends JFrame {
     private BaseImage stench;
     private BaseImage glitter;
 
-    public PerceptView() {
+    public PerceptView(Percept percept) {
         super();
         setLayout(new GridLayout(1, 3, 0, 0));
         setSize(300, 100);
@@ -22,9 +22,9 @@ public class PerceptView extends JFrame {
         this.stench = Images.stenchImage();
         this.glitter = Images.goldImage();
 
-        this.glitter.setVisible(false);
-        this.breeze.setVisible(false);
-        this.stench.setVisible(false);
+        this.glitter.setVisible(percept.glitter);
+        this.breeze.setVisible(percept.breeze);
+        this.stench.setVisible(percept.stench);
 
         this.add(this.glitter);
         this.add(this.breeze);
