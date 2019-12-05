@@ -3,6 +3,7 @@ package ai.whumpusworld;
 import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.Map.GameMap;
 import ai.whumpusworld.View.MapView;
+import ai.whumpusworld.View.PerceptView;
 import ai.whumpusworld.agent.Agent;
 import ai.whumpusworld.agent.Percept;
 
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     private static MapView mapView;
+    private static PerceptView perceptView;
     private static GameMap gameMap;
     private static Agent agent;
 
@@ -21,11 +23,10 @@ public class Main {
 
     private static void game() throws InterruptedException {
         while (!gameOver()) {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(1);
             step();
             mapView.repaint(agent.agentMap);
-            gameMap.printMap();
-            System.out.println("------------------------------------------------");
+            perceptView.repaint(agent.currentPercepts);
         }
     }
 
@@ -72,6 +73,7 @@ public class Main {
         agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));
 
         mapView = new MapView();
+        perceptView = new PerceptView();
         game();
     }
 }

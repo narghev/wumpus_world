@@ -1,6 +1,7 @@
 package ai.whumpusworld.View;
 
 import ai.whumpusworld.Map.AgentMap;
+import ai.whumpusworld.agent.Percept;
 
 import javax.swing.JFrame;
 import java.awt.*;

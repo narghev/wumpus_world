@@ -16,7 +16,7 @@ public class Agent {
 
     public AgentMap agentMap;
     private boolean[][] visited;
-    private Percept currentPercepts;
+    public Percept currentPercepts;
     private boolean grabbed;
 
     public Agent(Percept initialPercepts){

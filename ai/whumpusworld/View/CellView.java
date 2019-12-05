@@ -4,6 +4,7 @@ import ai.whumpusworld.Cell.AgentCell;
 import ai.whumpusworld.Cell.Cell;
 import ai.whumpusworld.View.Image.BaseImage;
 import ai.whumpusworld.View.Image.Images;
+import ai.whumpusworld.agent.Percept;
 
 import java.awt.*;
 import javax.swing.*;
@@ -42,8 +43,6 @@ class CellView extends JPanel {
         this.pitImage.setVisible(cell.pit.data);
         this.goldImage.setVisible(cell.gold.data);
         this.agentImage.setVisible(cell.agent.data);
-        this.breezeImage.setVisible(cell.breeze.data);
-        this.stenchImage.setVisible(cell.stench.data);
         this.whumpusImage.setVisible(cell.whumpus.data);
     }
 }
