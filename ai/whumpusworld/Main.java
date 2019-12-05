@@ -46,6 +46,12 @@ public class Main {
     }
 
     private static void step() {
+        // GRAB GOLD
+        Coordinate newGoldCoordinate = agent.grab();
+        if (newGoldCoordinate != null) {
+            gameMap.setGoldCoordinates(gameMap.agentCoordinates);
+        }
+
         // SHOOT THE WHUMPUS
         boolean shootResult = agent.shoot();
         if (shootResult)
@@ -54,12 +60,6 @@ public class Main {
         // MOVE AGENT
         Coordinate newAgentCoordinates = agent.move();
         gameMap.setAgentCoordinates(newAgentCoordinates);
-
-        // GRAB GOLD
-        Coordinate newGoldCoordinate = agent.grab();
-        if (newGoldCoordinate != null) {
-            gameMap.setGoldCoordinates(newGoldCoordinate);
-        }
 
         // UPDATE KB
         Percept newPercepts = getCurrentPercepts(newAgentCoordinates);
