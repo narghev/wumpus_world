@@ -9,7 +9,7 @@ import java.awt.*;
 public class MapView extends JFrame {
     private CellView[][] cells = new CellView[4][4];
 
-    public MapView(){
+    public MapView(AgentMap map){
         super();
         setLayout(new GridLayout(4, 4, 0, 0));
         setSize(800, 800);
@@ -17,7 +17,7 @@ public class MapView extends JFrame {
 
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++) {
-                CellView newCell = new CellView();
+                CellView newCell = new CellView(map.map[i][j]);
                 cells[i][j] = newCell;
                 this.add(newCell);
             }

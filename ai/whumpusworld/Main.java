@@ -74,7 +74,7 @@ public class Main {
         Cell initCell = gameMap.map[0][0];
         agent = new Agent(new Percept(initCell.gold, initCell.stench, initCell.breeze));
 
-        mapView = new MapView();
+        mapView = new MapView(agent.agentMap);
         perceptView = new PerceptView();
         gameMapView = new GameMapView(gameMap);
         game();

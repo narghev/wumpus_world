@@ -12,6 +12,10 @@ public class AgentMap {
                 map[i][j] = new AgentCell(false, false, false, false, false, false);
 
         map[0][0].agent.data = true;
+        map[0][0].whumpus.data = false;
+        map[0][0].whumpus.alreadySet = true;
+        map[0][0].pit.alreadySet = true;
+        map[0][0].pit.data = false;
     }
 
     public void printMap(){
